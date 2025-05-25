@@ -9,4 +9,4 @@ def index():
 
 @app.route("/layout")
 def base():
-    return render_template("base.html")
+    return render_template("base.html", title="Layout")
