@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Expense Tracker</title>
-  <link href={{ url_for('static', filename='style.css' ) }} rel="stylesheet">
-</head>
-
-<body>
-  <h1>Expense Tracker</h1>
-</body>
-
-</html>
+{% block content %}
+<h1>Expense Tracker</h1>
+<p>Index file</p>
+{% endblock %}
