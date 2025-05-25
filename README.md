@@ -10,6 +10,24 @@ For the development we are using [uv](https://github.com/astral-sh/uv), an extre
 uv run main.py
 ```
 
+For the tailwind css we are using [Tailwind Flask Starter](https://github.com/themesberg/tailwind-flask-starter). In order to use it, if not installed yet, run:
+
+```bash
+npm install
+```
+
+Then run in the background:
+
+```bash
+npx tailwindcss -i ./static/src/input.css -o ./static/dist/output.css --watch
+```
+
+Run the flask app:
+
+```bash
+uv run main.py
+```
+
 ## Acknowledgements
 
 - [Flask](https://flask.palletsprojects.com/en/2.0.x/)
