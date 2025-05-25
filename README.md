@@ -15,6 +15,8 @@ uv run main.py
 - [Flask](https://flask.palletsprojects.com/en/2.0.x/)
 - [Uv](https://github.com/astral-sh/uv)
 - [Coding with Prince - Flask Dashboard](https://www.youtube.com/watch?v=SLftzEqoLPk&list=PLU7aW4OZeUzwn6L1txXQ9viaAIR2mDqbv)
+- [Flowbite: Gettting Started/Flask](https://flowbite.com/docs/getting-started/flask/) - instruction on how to install Tailwind CSS Flask and Flowbite
+- [Tailwind Flask Starter](https://github.com/themesberg/tailwind-flask-starter)
 
 ## License
 
