@@ -19,7 +19,7 @@ npm install
 Then run in the background:
 
 ```bash
-npx tailwindcss -i ./static/src/input.css -o ./static/dist/output.css --watch
+npx tailwindcss -i ./app/static/src/input.css -o ./app/static/dist/output.css --watch
 ```
 
 Run the flask app:
