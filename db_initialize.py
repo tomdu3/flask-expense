@@ -9,8 +9,8 @@ with app.app_context():
     print("\n--------------------")
 
     entry1 = IncomeExpenses(amount=1000, category="salary", description="Salary")
-    entry2 = IncomeExpenses(amount=500, category="rent", description="Rent")
-    entry3 = IncomeExpenses(amount=100, category="transport", description="Transport")
+    entry2 = IncomeExpenses(amount=500, category="rent", type="expense", description="Rent")
+    entry3 = IncomeExpenses(amount=100, category="transport", type="expense", description="Transport")
 
     print("\nEntries:")
     print(entry1)
