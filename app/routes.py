@@ -5,8 +5,14 @@ from app.models import IncomeExpenses
 
 @app.route("/")
 def index():
-    entries = IncomeExpenses.query.all()
-    return render_template("index.html", entries=entries)
+    entries = IncomeExpenses.query.order_by(
+        IncomeExpenses.date.desc()
+        ).all()
+    return render_template(
+        "index.html",
+        title="Transaction List",
+        entries=entries
+        )
 
 
 @app.route("/add", methods=["GET", "POST"])
@@ -23,7 +29,11 @@ def add_expense():
         db.session.commit()
         flash("Entry added successfully!", "success")
         return redirect(url_for("index"))
-    return render_template("add.html", title="Add Expense/Income Entry", form=form)
+    return render_template(
+        "add.html",
+        title="Add Expense/Income Entry",
+        form=form
+        )
 
 
 @app.route("/flowbite-test")
@@ -50,11 +60,33 @@ def edit(entry_id):
         db.session.commit()
         flash("Entry updated successfully!", "success")
         return redirect(url_for("index"))
-    return render_template("edit.html", title="Edit Expense/Income Entry", form=form)
+    return render_template(
+        "edit.html",
+        title="Edit Expense/Income Entry",
+        form=form
+        )
 
 
 @app.template_filter()
-def number_format(value, decimal_places=2, decimal_sep='.', thousand_sep=','):
+def number_format(
+    value: float,
+    decimal_places: int = 2,
+    decimal_sep: str = '.',
+    thousand_sep: str = ','
+    ) -> str:
+    """
+    Format a number with a specified number of decimal places
+    and thousand separator.
+    
+    Args:
+        value (float): The number to format.
+        decimal_places (int): The number of decimal places.
+        decimal_sep (str): The decimal separator.
+        thousand_sep (str): The thousand separator.
+    
+    Returns:
+        str: The formatted number.
+    """
     try:
         format_str = "{:,.{prec}f}".format(value, prec=decimal_places)
         if thousand_sep != ',':
