@@ -20,7 +20,7 @@
             <tbody>
                 {% for entry in entries %}
                 <tr class="hover:bg-gray-100">
-                    <th scope="row" class="border border-gray-300 px-4 py-2">{{ loop.index }}</th>
+                    <th scope="row" class="border border-gray-300 px-4 py-2">{{ entry.id }}</th>
                     <td class="border border-gray-300 px-4 py-2">{{ entry.date.strftime("%m-%d-%Y") }}</td>
                     <td class="border border-gray-300 px-4 py-2">{{ entry.description }}</td>
                     <td class="border border-gray-300 px-4 py-2">{{ entry.type }}</td>
