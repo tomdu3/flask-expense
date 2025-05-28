@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 datasets: [{
                     label: "Income Vs Expenses",
                     data: Object.values(income_vs_expense_data),
-                    backgroundColor: ['#5DA5DA', '#FAA43A', '#60BD68', '#B276B2', '#E16851', '#FB8267'],
+                    backgroundColor: ['#5DA5DA', '#E16851', '#FAA43A', '#60BD68', '#B276B2', '#FB8267'],
                     borderWidth: 1,
                     hoverBorderColor: "black",
                     hoverBorderWidth: 2,
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 datasets: [{
                     label: "Categories Of Income",
                     data: income_category_data,
-                    backgroundColor: ['#5DA5DA', '#FAA43A', '#60BD68', '#B276B2', '#E16851', '#FB8267'],
+                    backgroundColor: ['#5DA5DA', '#E16851', '#FAA43A', '#60BD68', '#B276B2', '#FB8267'],
                     borderWidth: 1,
                     hoverBorderColor: "black",
                     hoverBorderWidth: 2,
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     label: "Expenditure Over Time",
                     data: over_time_expenditure,
                     fill: false,
-                    borderColor: "rgb(75, 192, 192)",
+                    borderColor: "rgb(255, 0, 0)",
                     lineTension: 0.1
                 }]
             },
