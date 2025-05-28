@@ -1,38 +1,113 @@
-const ctx = document.getElementById('myChart');
+// Ensure Chart.js is loaded before this script runs
+document.addEventListener('DOMContentLoaded', () => {
+    // Parse data passed from Jinja
+    const income_vs_expense_raw = JSON.parse(document.getElementById('income_vs_expense-data').textContent);
+    const income_category_data = JSON.parse(document.getElementById('income_category-data').textContent);
+    const over_time_expenditure = JSON.parse(document.getElementById('over_time_expenditure-data').textContent);
+    const labels = JSON.parse(document.getElementById('labels-data').textContent);
 
-new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            borderWidth: 1,
-            borderColor: 'rgba(75, 192, 192, 1)',
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',   // Red
-                'rgba(54, 162, 235, 0.2)',   // Blue
-                'rgba(255, 206, 86, 0.2)',   // Yellow
-                'rgba(75, 192, 192, 0.2)',   // Green
-                'rgba(153, 102, 255, 0.2)',  // Purple
-                'rgba(255, 159, 64, 0.2)'    // Orange
-            ],
-            // Optional: set border colors for each bar if you want borders
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-        }]
-    },
-    options: {
-        scales: {
-            y: {
-                beginAtZero: true
-            }
+    // Process income vs expense data
+    const income_vs_expense_data = {};
+    income_vs_expense_raw.forEach(item => {
+        income_vs_expense_data[item.type] = item.amount;
+    });
+
+    // Optional: Update default scale
+    if (Chart.registry && Chart.registry.scales) {
+        const defaultOptions = Chart.defaults;
+        if (defaultOptions.scales && defaultOptions.scales.linear) {
+            defaultOptions.scales.linear.min = 0;
         }
+    }
+
+    // Initialize Income vs Expense Pie Chart
+    const ctxExpense = document.getElementById('income_vs_expense');
+    if (ctxExpense) {
+        new Chart(ctxExpense, {
+            type: 'pie',
+            data: {
+                labels: Object.keys(income_vs_expense_data),
+                datasets: [{
+                    label: "Income Vs Expenses",
+                    data: Object.values(income_vs_expense_data),
+                    backgroundColor: ['#5DA5DA', '#FAA43A', '#60BD68', '#B276B2', '#E16851', '#FB8267'],
+                    borderWidth: 1,
+                    hoverBorderColor: "black",
+                    hoverBorderWidth: 2,
+                    hoverBackgroundColor: 'rgba(154, 245, 140)',
+                    pointHoverRadius: 5
+                }],
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "Income Vs Expenses",
+                    fontSize: 20,
+                },
+                legend: {
+                    position: "right",
+                    labels: { fontColor: "gray" },
+                    display: true,
+                },
+                elements: {
+                    hitRadius: 3,
+                }
+            }
+        });
+    }
+
+    // Initialize Income Categories Bar Chart
+    const ctxCategory = document.getElementById('income_vs_category');
+    if (ctxCategory) {
+        new Chart(ctxCategory, {
+            type: 'bar',
+            data: {
+                labels: ['investment', 'rent', 'salary', 'side_hustle'],
+                datasets: [{
+                    label: "Categories Of Income",
+                    data: income_category_data,
+                    backgroundColor: ['#5DA5DA', '#FAA43A', '#60BD68', '#B276B2', '#E16851', '#FB8267'],
+                    borderWidth: 1,
+                    hoverBorderColor: "black",
+                    hoverBorderWidth: 2,
+                    hoverBackgroundColor: 'rgba(154, 245, 140)',
+                    pointHoverRadius: 5
+                }],
+            },
+            options: {
+                title: {
+                    display: true,
+                    text: "Income Categories",
+                    fontSize: 20,
+                },
+                legend: {
+                    position: "right",
+                    labels: { fontColor: "gray" },
+                    display: true,
+                },
+                elements: {
+                    hitRadius: 3,
+                }
+            }
+        });
+    }
+
+    // Initialize Over Time Expenditure Line Chart
+    const ctxOverTime = document.getElementById('overtime_expenditure');
+    if (ctxOverTime) {
+        new Chart(ctxOverTime, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: "Expenditure Over Time",
+                    data: over_time_expenditure,
+                    fill: false,
+                    borderColor: "rgb(75, 192, 192)",
+                    lineTension: 0.1
+                }]
+            },
+            options: {}
+        });
     }
 });
