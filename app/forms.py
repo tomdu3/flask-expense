@@ -15,9 +15,18 @@ class UserInputForm(FlaskForm):
         'Category', validators=[DataRequired()],
         choices = [
             ('salary', 'salary'),
+            ('bonus', 'bonus'),
+            ('freelance', 'freelance'),
+            ('interest', 'interest'),
             ('rent', 'rent'),
             ('transport', 'transport'),
             ('food', 'food'),
+            ('medical', 'medical'),
+            ('education', 'education'),
+            ('entertainment', 'entertainment'),
+            ('gift', 'gift'),
+            ('shopping', 'shopping'),
+            ('tax', 'tax'),
             ('other', 'other')
             ]
         )

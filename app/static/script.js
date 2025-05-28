@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Parse data passed from Jinja
     const income_vs_expense_raw = JSON.parse(document.getElementById('income_vs_expense-data').textContent);
     const income_category_data = JSON.parse(document.getElementById('income_category-data').textContent);
+    const expense_category_data = JSON.parse(document.getElementById('expense_category-data').textContent);
     const over_time_expenditure = JSON.parse(document.getElementById('over_time_expenditure-data').textContent);
     const labels = JSON.parse(document.getElementById('labels-data').textContent);
 
@@ -30,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 datasets: [{
                     label: "Income Vs Expenses",
                     data: Object.values(income_vs_expense_data),
-                    backgroundColor: ['#5DA5DA', '#E16851', '#FAA43A', '#60BD68', '#B276B2', '#FB8267'],
+                    backgroundColor: ['#E16851', '#5DA5DA', '#FAA43A', '#60BD68', '#B276B2', '#FB8267'],
                     borderWidth: 1,
                     hoverBorderColor: "black",
                     hoverBorderWidth: 2,
@@ -62,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         new Chart(ctxCategory, {
             type: 'bar',
             data: {
-                labels: ['investment', 'rent', 'salary', 'side_hustle'],
+                labels: ['salary', 'bonus', 'freelance', 'interest', 'other'],
                 datasets: [{
                     label: "Categories Of Income",
                     data: income_category_data,
@@ -87,6 +88,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 elements: {
                     hitRadius: 3,
+                }
+            }
+        });
+    }
+
+    // Initialize Expense Categories Bar Chart
+    const ctxExpenseCategory = document.getElementById('expense_vs_category');
+    if (ctxExpenseCategory) {
+        new Chart(ctxExpenseCategory, {
+            type: 'bar',
+            data: {
+                labels: ['rent', 'transport', 'food', 'medical', 'tax', 'other'],
+                datasets: [{
+                    label: "Categories Of Expenses",
+                    data: expense_category_data,
+                    backgroundColor: ['#E16851', '#5DA5DA', '#FAA43A', '#60BD68', '#B276B2', '#FB8267'],
+                    borderWidth: 1,
+                    hoverBorderColor: "black",
+                    hoverBorderWidth: 2,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            boxWidth: 12
+                        }
+                    },
                 }
             }
         });

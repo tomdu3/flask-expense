@@ -116,23 +116,42 @@ def dashboard():
         for amount, type_ in income_vs_expense
     ]
 
-    # Query for category comparison
-    category_comparison = db.session.query(
-        db.func.sum(
-            IncomeExpenses.amount
-            ),
+    # Query for income categories
+    income_categories = db.session.query(
+        db.func.sum(IncomeExpenses.amount),
         IncomeExpenses.category
-        ).group_by(
-            IncomeExpenses.category
-            ).order_by(
-                IncomeExpenses.category
-                ).all()
-    
-    # Convert to JSON-serializable format
-    category_data = [
-        {"amount": float(amount) if amount else 0, 
+    ).filter(
+        IncomeExpenses.type == 'income'
+    ).group_by(
+        IncomeExpenses.category
+    ).order_by(
+        IncomeExpenses.category
+    ).all()
+
+    # Convert income categories to JSON-serializable format
+    income_category_data = [
+        {"amount": float(amount) if amount else 0,
          "category": category}
-        for amount, category in category_comparison
+        for amount, category in income_categories
+    ]
+
+    # Query for expense categories
+    expense_categories = db.session.query(
+        db.func.sum(IncomeExpenses.amount),
+        IncomeExpenses.category
+    ).filter(
+        IncomeExpenses.type == 'expense'
+    ).group_by(
+        IncomeExpenses.category
+    ).order_by(
+        IncomeExpenses.category
+    ).all()
+
+    # Convert expense categories to JSON-serializable format
+    expense_category_data = [
+        {"amount": float(amount) if amount else 0,
+         "category": category}
+        for amount, category in expense_categories
     ]
 
     # Query for dates
@@ -153,7 +172,8 @@ def dashboard():
     ]
 
     # Extract lists for the template
-    income_category = [item["amount"] for item in category_data]
+    income_category = [item["amount"] for item in income_category_data]
+    expense_category = [item["amount"] for item in expense_category_data]
     income_expense = [item["amount"] for item in income_vs_expense_data]
     over_time_expenditure = [item["amount"] for item in dates_data]
     dates_label = [item["date"] for item in dates_data]
@@ -162,9 +182,11 @@ def dashboard():
         "dashboard.html",
         title="Dashboard",
         income_vs_expense=income_vs_expense_data,
-        category_comparison=category_data,
+        income_categories=income_category_data,
+        expense_categories=expense_category_data,
         dates=dates_data,
         income_category=income_category,
+        expense_category=expense_category,
         income_expense=income_expense,
         over_time_expenditure=over_time_expenditure,
         dates_label=dates_label
