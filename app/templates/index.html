@@ -24,7 +24,7 @@
                     <td class="border border-gray-300 px-4 py-2">{{ entry.description }}</td>
                     <td class="border border-gray-300 px-4 py-2 hidden sm:table-cell">{{ entry.type }}</td>
                     <td class="border border-gray-300 px-4 py-2 hidden sm:table-cell">{{ entry.category }}</td>
-                    <td class="border border-gray-300 px-4 py-2">{{ entry.amount|number_format(2, ".", ",") }}</td>
+                    <td class="border border-gray-300 px-4 py-2 text-right">{{ entry.amount|number_format(2, ".", ",") }}</td>
                     <td class="border border-gray-300 px-4 py-2">
                         <div class="flex flex-col md:flex-row items-center justify-center space-y-2 md:space-y-0 md:space-x-2 w-full">
                             <a href="{{ url_for('delete', entry_id=entry.id) }}"
