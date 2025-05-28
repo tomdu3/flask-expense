@@ -51,3 +51,16 @@ def edit(entry_id):
         flash("Entry updated successfully!", "success")
         return redirect(url_for("index"))
     return render_template("edit.html", title="Edit Expense/Income Entry", form=form)
+
+
+@app.template_filter()
+def number_format(value, decimal_places=2, decimal_sep='.', thousand_sep=','):
+    try:
+        format_str = "{:,.{prec}f}".format(value, prec=decimal_places)
+        if thousand_sep != ',':
+            format_str = format_str.replace(',', thousand_sep)
+        if decimal_sep != '.':
+            format_str = format_str.replace('.', decimal_sep)
+        return format_str
+    except (ValueError, TypeError):
+        return value
