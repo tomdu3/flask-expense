@@ -100,4 +100,72 @@ def number_format(
 
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html", title="Dashboard")
+    # Query for income vs expense totals
+    income_vs_expense = db.session.query(
+        db.func.sum(IncomeExpenses.amount),
+        IncomeExpenses.type).group_by(
+            IncomeExpenses.type
+            ).order_by(
+                IncomeExpenses.type
+                ).all()
+    
+    # Convert to JSON-serializable format
+    income_vs_expense_data = [
+        {"amount": float(amount) if amount else 0, 
+         "type": type_}
+        for amount, type_ in income_vs_expense
+    ]
+
+    # Query for category comparison
+    category_comparison = db.session.query(
+        db.func.sum(
+            IncomeExpenses.amount
+            ),
+        IncomeExpenses.category
+        ).group_by(
+            IncomeExpenses.category
+            ).order_by(
+                IncomeExpenses.category
+                ).all()
+    
+    # Convert to JSON-serializable format
+    category_data = [
+        {"amount": float(amount) if amount else 0, 
+         "category": category}
+        for amount, category in category_comparison
+    ]
+
+    # Query for dates
+    dates = db.session.query(
+        db.func.sum(IncomeExpenses.amount),
+        IncomeExpenses.date
+        ).group_by(
+            IncomeExpenses.date
+            ).order_by(
+                IncomeExpenses.date
+                ).all()
+    
+    # Convert to JSON-serializable format
+    dates_data = [
+        {"amount": float(amount) if amount else 0, 
+         "date": date.strftime("%m-%d-%y")}
+        for amount, date in dates
+    ]
+
+    # Extract lists for the template
+    income_category = [item["amount"] for item in category_data]
+    income_expense = [item["amount"] for item in income_vs_expense_data]
+    over_time_expenditure = [item["amount"] for item in dates_data]
+    dates_label = [item["date"] for item in dates_data]
+
+    return render_template(
+        "dashboard.html",
+        title="Dashboard",
+        income_vs_expense=income_vs_expense_data,
+        category_comparison=category_data,
+        dates=dates_data,
+        income_category=income_category,
+        income_expense=income_expense,
+        over_time_expenditure=over_time_expenditure,
+        dates_label=dates_label
+        )
