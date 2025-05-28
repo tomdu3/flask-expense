@@ -1,36 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div>
-    <div class="w-full md:w-1/2 p-2">
-        <div class="card mb-2 shadow-lg">
-          <div class="p-4">
-            <div class="relative h-64">
-              <canvas id="income_vs_expense" class="w-full h-full"></canvas>
+<div class="container mx-auto px-4">
+    <h2 class="text-2xl font-bold mb-6 text-center">Financial Dashboard</h2>
+    
+    <!-- Flex container for the charts -->
+    <div class="flex flex-wrap -mx-2">
+        <!-- Income vs Expense Chart -->
+        <div class="w-full md:w-1/2 px-2 mb-4">
+            <div class="bg-white rounded-lg shadow-lg p-4 h-full">
+                <h3 class="text-lg font-semibold mb-4 text-center">Income vs Expenses</h3>
+                <div class="relative h-64">
+                    <canvas id="income_vs_expense" class="w-full h-full"></canvas>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      
-      <div class="w-full md:w-1/2 p-2">
-        <div class="card mb-2 shadow-lg">
-          <div class="p-4">
-            <div class="relative h-64">
-              <canvas id="income_vs_category" class="w-full h-full"></canvas>
+        
+        <!-- Income Categories Chart -->
+        <div class="w-full md:w-1/2 px-2 mb-4">
+            <div class="bg-white rounded-lg shadow-lg p-4 h-full">
+                <h3 class="text-lg font-semibold mb-4">Income Categories</h3>
+                <div class="relative h-64">
+                    <canvas id="income_vs_category" class="w-full h-full"></canvas>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      
-      <div class="w-full md:w-1/2 p-2">
-        <div class="card mb-2 shadow-lg">
-          <div class="p-4">
-            <div class="relative h-64">
-              <canvas id="overtime_expenditure" class="w-full h-full"></canvas>
+        
+        <!-- Overtime Expenditure Chart -->
+        <div class="w-full md:w-1/2 px-2 mb-4">
+            <div class="bg-white rounded-lg shadow-lg p-4 h-full">
+                <h3 class="text-lg font-semibold mb-4">Expenditure Over Time</h3>
+                <div class="relative h-64">
+                    <canvas id="overtime_expenditure" class="w-full h-full"></canvas>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
+    </div>
 </div>
 <script id="income_vs_expense-data" type="application/json">{{ income_vs_expense | tojson }}</script>
 <script id="income_category-data" type="application/json">{{ income_category | tojson }}</script>
