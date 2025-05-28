@@ -2,8 +2,39 @@
 
 {% block content %}
 <div>
-    <canvas id="myChart" max-width="100" max-height="100"></canvas>
+    <div class="w-full md:w-1/2 p-2">
+        <div class="card mb-2 shadow-lg">
+          <div class="p-4">
+            <div class="relative h-64">
+              <canvas id="income_vs_expense" class="w-full h-full"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="w-full md:w-1/2 p-2">
+        <div class="card mb-2 shadow-lg">
+          <div class="p-4">
+            <div class="relative h-64">
+              <canvas id="income_vs_category" class="w-full h-full"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="w-full md:w-1/2 p-2">
+        <div class="card mb-2 shadow-lg">
+          <div class="p-4">
+            <div class="relative h-64">
+              <canvas id="overtime_expenditure" class="w-full h-full"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
 </div>
-
+<script id="income_vs_expense-data" type="application/json">{{ income_vs_expense | tojson }}</script>
+<script id="income_category-data" type="application/json">{{ income_category | tojson }}</script>
+<script id="over_time_expenditure-data" type="application/json">{{ over_time_expenditure | tojson }}</script>
+<script id="labels-data" type="application/json">{{ dates_label | tojson }}</script>
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 {% endblock %}
