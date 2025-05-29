@@ -22,10 +22,6 @@ class UserInputForm(FlaskForm):
             ('transport', 'transport'),
             ('food', 'food'),
             ('medical', 'medical'),
-            ('education', 'education'),
-            ('entertainment', 'entertainment'),
-            ('gift', 'gift'),
-            ('shopping', 'shopping'),
             ('tax', 'tax'),
             ('other', 'other')
             ]
