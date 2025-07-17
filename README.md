@@ -36,6 +36,40 @@ To run the Flask app with Uvicorn, you can use the following command:
 uvicorn main:app --reload
 ```
 
+### Running with Docker
+
+To run the application with Docker, you first need to build the Docker image and then run the container.
+
+**1. Build the Docker image:**
+
+```bash
+docker build -t flask-expense .
+```
+
+**2. Run the Docker container:**
+
+```bash
+docker run -p 5000:5000 -e FLASK_APP=main.py flask-expense
+```
+
+### Running with Docker Compose
+
+To run the application with Docker Compose, you can use the following command:
+
+```bash
+docker-compose up
+```
+
+This will build the image and run the container in one step. The application will be available at [http://localhost:5000](http://localhost:5000).
+
+The `docker-compose.yml` file is configured to use a `.env` file for environment variables. You can create a `.env` file by copying the `.env-sample` file:
+
+```bash
+cp .env-sample .env
+```
+
+Then, you can edit the `.env` file to set the necessary environment variables.
+
 ## Acknowledgements
 
 - [Flask](https://flask.palletsprojects.com/en/2.0.x/)
