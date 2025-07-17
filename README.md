@@ -28,6 +28,14 @@ Run the flask app:
 uv run main.py
 ```
 
+### Running with Uvicorn
+
+To run the Flask app with Uvicorn, you can use the following command:
+
+```bash
+uvicorn main:app --reload
+```
+
 ## Acknowledgements
 
 - [Flask](https://flask.palletsprojects.com/en/2.0.x/)
