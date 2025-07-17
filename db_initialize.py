@@ -1,5 +1,9 @@
 from app import db, app
 from app.models import IncomeExpenses
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 with app.app_context():
     db.create_all()
