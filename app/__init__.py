@@ -1,7 +1,7 @@
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-# from whitenoise import WhiteNoise
+from whitenoise import WhiteNoise
 
 app = Flask(__name__)
 
@@ -12,5 +12,5 @@ db = SQLAlchemy(app)
 
 from app import routes
 
-# app.wsgi_app = WhiteNoise(app.wsgi_app, root="app/static/")
+app.wsgi_app = WhiteNoise(app.wsgi_app, root=os.path.join(os.path.dirname(__file__), "static"))
 
