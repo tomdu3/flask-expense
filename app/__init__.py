@@ -8,7 +8,10 @@ from whitenoise import WhiteNoise
 load_dotenv()
 
 # Initialize Flask application
-app = Flask(__name__, static_folder='static', static_url_path='/static')
+app = Flask(__name__,
+            static_url_path='', 
+            static_folder='static',
+            template_folder='templates')
 static_path = os.path.join(os.path.dirname(__file__), 'static')
 app.wsgi_app = WhiteNoise(app.wsgi_app, root=static_path)
 
