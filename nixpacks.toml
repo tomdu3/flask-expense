@@ -3,8 +3,15 @@ cmds = [
     "apt-get update && apt-get install -y python3 python3-pip python3-venv"
 ]
 
+[phases.setup]
+cmds = [
+    "apt-get update && apt-get install -y python3 python3-pip python3-venv"
+]
+
 [phases.install]
 cmds = [
+    "pip3 install --upgrade pip",
+    "pip3 install gunicorn",  # Explicitly install gunicorn first
     "pip3 install -r requirements.txt",
     "npm install",
     "npm install -g @tailwindcss/cli"
@@ -16,12 +23,13 @@ cmds = [
 ]
 
 [start]
-cmd = "gunicorn --bind 0.0.0.0:$PORT main:app --workers 4 --threads 2"
+cmd = "python -m gunicorn --bind 0.0.0.0:$PORT main:app --workers 4 --threads 2"
 
 [env]
 PYTHONUNBUFFERED = "1"
 FLASK_APP = "main:app"
 FLASK_ENV = "production"
+PATH = "/app/.local/bin:$PATH"
 
 [build.args]
 NIXPACKS_PYTHON_VERSION = "3.12"
