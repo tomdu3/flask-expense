@@ -1,3 +1,44 @@
-# nixpacks.toml
+[phases.setup]
+cmds = [
+    "apt-get update && apt-get install -y curl",
+    "curl -sSL https://install.python-poetry.org | python3 -",
+]
+
+[phases.install]
+cmds = [
+    # Install Python dependencies
+    "pip install --upgrade pip",
+    "pip install -r requirements.txt",
+    
+    # Install Node.js and npm
+    "curl -fsSL https://deb.nodesource.com/setup_20.x | bash -",
+    "apt-get install -y nodejs",
+    
+    # Install npm dependencies
+    "npm install",
+    
+    # Install Tailwind CSS CLI globally
+    "npm install -g @tailwindcss/cli"
+]
+
+[phases.build]
+cmds = [
+    # Build Tailwind CSS
+    "tailwindcss -i app/static/src/input.css -o app/static/dist/style.css --minify"
+]
+
 [start]
-cmd = "gunicorn -w 4 -b 0.0.0.0:5000 main:app"
+cmd = "gunicorn --bind 0.0.0.0:$PORT main:app --workers 4 --threads 2"
+
+[env]
+PYTHONUNBUFFERED = "1"
+FLASK_APP = "main:app"
+FLASK_ENV = "production"
+
+[build.args]
+NIXPACKS_NODE_VERSION = "20"
+NIXPACKS_PYTHON_VERSION = "3.12"
+
+[plan.providers]
+python = "cpython"
+node = "nodejs"
