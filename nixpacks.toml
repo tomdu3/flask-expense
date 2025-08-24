@@ -1,0 +1,13 @@
+[phases.install]
+cmds = [
+    "npm install",
+    "npm install -g @tailwindcss/cli"
+]
+
+[phases.build]
+cmds = [
+    "tailwindcss -i app/static/src/input.css -o app/static/dist/style.css --minify"
+]
+
+[start]
+cmd = "gunicorn --bind 0.0.0.0:5000 main:app --workers 4 --threads 2"
