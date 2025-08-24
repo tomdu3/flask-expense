@@ -8,13 +8,6 @@ cmds = [
     "pip3 install --upgrade pip",
     "pip3 install gunicorn",  # Explicitly install gunicorn first
     "pip3 install -r requirements.txt",
-    "npm install",
-    "npm install -g @tailwindcss/cli"
-]
-
-[phases.build]
-cmds = [
-    "tailwindcss -i app/static/src/input.css -o app/static/dist/style.css --minify"
 ]
 
 [start]
