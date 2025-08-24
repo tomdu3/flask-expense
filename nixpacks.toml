@@ -1,29 +1,17 @@
 [phases.setup]
 cmds = [
-    "apt-get update && apt-get install -y curl",
-    "curl -sSL https://install.python-poetry.org | python3 -",
+    "apt-get update && apt-get install -y python3 python3-pip python3-venv"
 ]
 
 [phases.install]
 cmds = [
-    # Install Python dependencies
-    "pip install --upgrade pip",
-    "pip install -r requirements.txt",
-    
-    # Install Node.js and npm
-    "curl -fsSL https://deb.nodesource.com/setup_20.x | bash -",
-    "apt-get install -y nodejs",
-    
-    # Install npm dependencies
+    "pip3 install -r requirements.txt",
     "npm install",
-    
-    # Install Tailwind CSS CLI globally
     "npm install -g @tailwindcss/cli"
 ]
 
 [phases.build]
 cmds = [
-    # Build Tailwind CSS
     "tailwindcss -i app/static/src/input.css -o app/static/dist/style.css --minify"
 ]
 
@@ -36,9 +24,4 @@ FLASK_APP = "main:app"
 FLASK_ENV = "production"
 
 [build.args]
-NIXPACKS_NODE_VERSION = "20"
 NIXPACKS_PYTHON_VERSION = "3.12"
-
-[plan.providers]
-python = "cpython"
-node = "nodejs"
