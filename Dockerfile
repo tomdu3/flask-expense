@@ -1,31 +1,32 @@
-# Create the final Python application
-FROM python:3.12-slim
+# adapted from https://www.loopwerk.io/articles/2025/coolify-django/
+FROM  debian:bookworm-slim
 WORKDIR /app
+
+# Arguments needed at build-time, to be provided by Coolify
+ARG SECRET_KEY
+ARG DATABASE_URI
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    gcc \
-    default-libmysqlclient-dev \
-    pkg-config \
+    build-essential \
+    curl wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+# Install uv, the fast Python package manager
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+ENV PATH="/root/.local/bin:${PATH}"
 
-# Copy the application code
+# Copy only the dependency definitions first to leverage Docker's layer caching
+COPY pyproject.toml uv.lock .python-version ./
+
+# Install Python dependencies for production
+RUN uv sync --no-group dev --group prod
+
+# Copy the rest of the application code into the container
 COPY . .
 
-# Set environment variables
-ENV PYTHONUNBUFFERED=1
-ENV FLASK_APP=main:app
-ENV FLASK_ENV=production
+# Expose the port Gunicorn will run on
+EXPOSE 3000
 
-# Create non-root user
-RUN useradd -m myuser
-USER myuser
-
-EXPOSE 5000
-
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "main:app", "--workers", "4", "--threads", "2"]
+# Run with gunicorn
+CMD ["uv", "run", "--no-sync", "gunicorn", "--bind", "0.0.0.0:3000", "--workers", "3", "--access-logfile", "-", "--error-logfile", "-", "--log-level", "info", "config.wsgi:application"]
