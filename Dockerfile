@@ -1,14 +1,4 @@
-# Stage 1: Build the frontend assets
-FROM node:20-slim AS frontend
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY tailwind.config.js .
-COPY app/static/src/input.css app/static/src/input.css
-RUN npm install -g @tailwindcss/cli
-RUN tailwindcss -i app/static/src/input.css -o app/static/dist/style.css --minify
-
-# Stage 2: Create the final Python application
+# Create the final Python application
 FROM python:3.12-slim
 WORKDIR /app
 
@@ -26,9 +16,6 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 # Copy the application code
 COPY . .
-
-# Copy the built frontend assets from the frontend stage
-COPY --from=frontend /app/app/static/dist/style.css app/static/dist/style.css
 
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
