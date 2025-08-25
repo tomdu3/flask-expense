@@ -11,7 +11,7 @@ cmds = [
 ]
 
 [start]
-cmd = "python -m gunicorn --bind 0.0.0.0:$PORT main:app --workers 4 --threads 2"
+cmd = "python3 -m gunicorn --bind 0.0.0.0:$PORT main:app --workers 4 --threads 2"
 
 [env]
 PYTHONUNBUFFERED = "1"
