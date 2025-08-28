@@ -8,10 +8,14 @@ def index():
     entries = IncomeExpenses.query.order_by(
         IncomeExpenses.date.desc()
         ).all()
+    total_amount = db.session.query(
+        db.func.sum(IncomeExpenses.amount)
+        ).scalar()
     return render_template(
         "index.html",
         title="Transaction List",
-        entries=entries
+        entries=entries,
+        total_amount=total_amount
         )
 
 

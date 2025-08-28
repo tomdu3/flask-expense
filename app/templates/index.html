@@ -42,6 +42,13 @@
                 </tr>
                 {% endfor %}
             </tbody>
+            <tfoot>
+                <tr class="bg-gray-200 font-bold">
+                    <td colspan="5" class="border border-gray-300 px-4 py-2 text-right">Total</td>
+                    <td class="border border-gray-300 px-4 py-2 text-right">{{ total_amount|number_format(2, ".", ",") }}</td>
+                    <td class="border border-gray-300 px-4 py-2"></td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>
