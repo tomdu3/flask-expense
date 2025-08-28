@@ -19,15 +19,22 @@ def index():
 def add_expense():
     form = UserInputForm()
     if form.validate_on_submit():
+        amount = form.amount.data
+        if form.type.data == 'Expense':
+            amount = -amount
         entry = IncomeExpenses(
             type=form.type.data,
-            amount=form.amount.data,
+            amount=amount,
             category=form.category.data,
             description=form.description.data,
         )
-        db.session.add(entry)
-        db.session.commit()
-        flash("Entry added successfully!", "success")
+        try:
+            db.session.add(entry)
+            db.session.commit()
+            flash("Entry added successfully!", "success")
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error adding entry: {e}", "danger")
         return redirect(url_for("index"))
     return render_template(
         "add.html",
@@ -43,22 +50,33 @@ def flowbite_test():
 @app.route("/delete/<int:entry_id>")
 def delete(entry_id):
     entry = IncomeExpenses.query.get_or_404(entry_id)
-    db.session.delete(entry)
-    db.session.commit()
-    flash("Entry deleted successfully!", "success")
+    try:
+        db.session.delete(entry)
+        db.session.commit()
+        flash("Entry deleted successfully!", "success")
+    except Exception as e:
+        db.session.rollback()
+        flash(f"Error deleting entry: {e}", "danger")
     return redirect(url_for("index"))
 
-@app.route("/edit/<int:entry_id>")
+@app.route("/edit/<int:entry_id>", methods=["GET", "POST"])
 def edit(entry_id):
     entry = IncomeExpenses.query.get_or_404(entry_id)
     form = UserInputForm(obj=entry)
     if form.validate_on_submit():
         entry.type = form.type.data
-        entry.amount = form.amount.data
+        if entry.type == 'Expense':
+            entry.amount = -form.amount.data
+        else:
+            entry.amount = form.amount.data
         entry.category = form.category.data
         entry.description = form.description.data
-        db.session.commit()
-        flash("Entry updated successfully!", "success")
+        try:
+            db.session.commit()
+            flash("Entry updated successfully!", "success")
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error updating entry: {e}", "danger")
         return redirect(url_for("index"))
     return render_template(
         "edit.html",
@@ -100,15 +118,19 @@ def number_format(
 
 @app.route("/dashboard")
 def dashboard():
-    # Query for income vs expense totals
-    income_vs_expense = db.session.query(
-        db.func.sum(IncomeExpenses.amount),
-        IncomeExpenses.type).group_by(
-            IncomeExpenses.type
-            ).order_by(
+    try:
+        # Query for income vs expense totals
+        income_vs_expense = db.session.query(
+            db.func.sum(IncomeExpenses.amount),
+            IncomeExpenses.type).group_by(
                 IncomeExpenses.type
-                ).all()
-    
+                ).order_by(
+                    IncomeExpenses.type
+                    ).all()
+    except Exception as e:
+        flash(f"Error fetching income vs expense data: {e}", "danger")
+        income_vs_expense = []
+
     # Convert to JSON-serializable format
     income_vs_expense_data = [
         {"amount": float(amount) if amount else 0, 
@@ -116,17 +138,21 @@ def dashboard():
         for amount, type_ in income_vs_expense
     ]
 
-    # Query for income categories
-    income_categories = db.session.query(
-        db.func.sum(IncomeExpenses.amount),
-        IncomeExpenses.category
-    ).filter(
-        IncomeExpenses.type == 'income'
-    ).group_by(
-        IncomeExpenses.category
-    ).order_by(
-        IncomeExpenses.category
-    ).all()
+    try:
+        # Query for income categories
+        income_categories = db.session.query(
+            db.func.sum(IncomeExpenses.amount),
+            IncomeExpenses.category
+        ).filter(
+            IncomeExpenses.type == 'income'
+        ).group_by(
+            IncomeExpenses.category
+        ).order_by(
+            IncomeExpenses.category
+        ).all()
+    except Exception as e:
+        flash(f"Error fetching income categories: {e}", "danger")
+        income_categories = []
 
     # Convert income categories to JSON-serializable format
     income_category_data = [
@@ -135,17 +161,21 @@ def dashboard():
         for amount, category in income_categories
     ]
 
-    # Query for expense categories
-    expense_categories = db.session.query(
-        db.func.sum(IncomeExpenses.amount),
-        IncomeExpenses.category
-    ).filter(
-        IncomeExpenses.type == 'expense'
-    ).group_by(
-        IncomeExpenses.category
-    ).order_by(
-        IncomeExpenses.category
-    ).all()
+    try:
+        # Query for expense categories
+        expense_categories = db.session.query(
+            db.func.sum(IncomeExpenses.amount),
+            IncomeExpenses.category
+        ).filter(
+            IncomeExpenses.type == 'expense'
+        ).group_by(
+            IncomeExpenses.category
+        ).order_by(
+            IncomeExpenses.category
+        ).all()
+    except Exception as e:
+        flash(f"Error fetching expense categories: {e}", "danger")
+        expense_categories = []
 
     # Convert expense categories to JSON-serializable format
     expense_category_data = [
@@ -154,15 +184,19 @@ def dashboard():
         for amount, category in expense_categories
     ]
 
-    # Query for dates
-    dates = db.session.query(
-        db.func.sum(IncomeExpenses.amount),
-        IncomeExpenses.date
-        ).group_by(
+    try:
+        # Query for dates
+        dates = db.session.query(
+            db.func.sum(IncomeExpenses.amount),
             IncomeExpenses.date
-            ).order_by(
+            ).group_by(
                 IncomeExpenses.date
-                ).all()
+                ).order_by(
+                    IncomeExpenses.date
+                    ).all()
+    except Exception as e:
+        flash(f"Error fetching dates: {e}", "danger")
+        dates = []
     
     # Convert to JSON-serializable format
     dates_data = [
