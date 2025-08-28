@@ -2,21 +2,34 @@ from app import app, db
 from flask import render_template, flash, redirect, url_for
 from app.forms import UserInputForm
 from app.models import IncomeExpenses
+from sqlalchemy import func, case
 
 @app.route("/")
 def index():
     entries = IncomeExpenses.query.order_by(
         IncomeExpenses.date.desc()
-        ).all()
+    ).all()
+    
+    # Use func.coalesce and func.sum instead of db.func
     total_amount = db.session.query(
-        db.func.sum(IncomeExpenses.amount)
-        ).scalar()
+        func.coalesce(
+            func.sum(
+                case(
+                    (func.lower(IncomeExpenses.type) == 'income', IncomeExpenses.amount),
+                    (func.lower(IncomeExpenses.type) == 'expense', -IncomeExpenses.amount),
+                    else_=0
+                )
+            ),
+            0.0
+        )
+    ).scalar()
+    
     return render_template(
         "index.html",
         title="Transaction List",
         entries=entries,
         total_amount=total_amount
-        )
+    )
 
 
 @app.route("/add", methods=["GET", "POST"])
