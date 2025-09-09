@@ -1,5 +1,9 @@
 # Flask Expense Tracker
 
+![Flask Expense Tracker Screenshot](./docs/flask-expense.png)
+
+[Live Demo](https://budget.tomdcoding.net/)
+
 [Python | Flask] Simple expense tracker with dashboard
 
 ## Setup
@@ -69,6 +73,11 @@ cp .env-sample .env
 ```
 
 Then, you can edit the `.env` file to set the necessary environment variables.
+
+## Deployment
+
+The app is deployed on [Oracle Cloud Infrastructure](https://www.oracle.com/cloud/infrastructure/index.html) using [Coolify](https://coolify.io/). The deployed link is [https://budget.tomdcoding.net](https://budget.tomdcoding.net).
+
 
 ## Acknowledgements
 
