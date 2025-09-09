@@ -78,6 +78,49 @@ Then, you can edit the `.env` file to set the necessary environment variables.
 
 The app is deployed on [Oracle Cloud Infrastructure](https://www.oracle.com/cloud/infrastructure/index.html) using [Coolify](https://coolify.io/). The deployed link is [https://budget.tomdcoding.net](https://budget.tomdcoding.net).
 
+## Tech Stack
+
+- **Programming Languages:** Python, JavaScript, HTML/CSS
+- **Frameworks & Libraries:**
+  - **Backend:** Flask, Flask-SQLAlchemy, Flask-WTF, Gunicorn
+  - **Frontend:** Tailwind CSS, Flowbite, Chart.js
+- **Database:** Neon Postgres
+- **Deployment:** Docker, Docker Compose, Oracle Cloud Infrastructure, Coolify
+- **Package Management:** uv, npm
+
+## Database
+
+The application uses a **Neon Postgres** database to store expense and income data.
+
+### Relational Database Schema (Mermaid)
+
+```mermaid
+erDiagram
+    IncomeExpenses {
+        Integer id PK
+        String type "default: 'income'"
+        Float amount
+        String category "default: 'salary'"
+        String description
+        DateTime date
+    }
+```
+
+### Table Description
+
+#### `IncomeExpenses`
+
+This table stores the income and expense records.
+
+| Column      | Data Type | Description                                                  |
+|-------------|-----------|--------------------------------------------------------------|
+| `id`        | Integer   | Primary key for the table.                                   |
+| `type`      | String    | Type of the record, either 'income' or 'expense'.            |
+| `amount`    | Float     | The amount of money for the record.                          |
+| `category`  | String    | Category of the income or expense (e.g., 'salary', 'groceries'). |
+| `description` | String    | A brief description of the record.                           |
+| `date`      | DateTime  | The date and time when the record was created.               |
+
 
 ## Acknowledgements
 
