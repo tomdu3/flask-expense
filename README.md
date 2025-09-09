@@ -124,9 +124,9 @@ This table stores the income and expense records.
 
 ## Acknowledgements
 
-- [Flask](https://flask.palletsprojects.com/en/2.0.x/)
-- [Uv](https://github.com/astral-sh/uv)
-- [Coding with Prince - Flask Dashboard](https://www.youtube.com/watch?v=SLftzEqoLPk&list=PLU7aW4OZeUzwn6L1txXQ9viaAIR2mDqbv)
+- [Flask](https://flask.palletsprojects.com/en/2.0.x/) - A micro web framework written in Python.
+- [Uv](https://github.com/astral-sh/uv) - A fast Python package and project manager written in Rust.
+- [Coding with Prince - Flask Dashboard](https://www.youtube.com/watch?v=SLftzEqoLPk&list=PLU7aW4OZeUzwn6L1txXQ9viaAIR2mDqbv) - A helpful tutorial to build a dashboard with Flask.
 - [Flowbite: Gettting Started/Flask](https://flowbite.com/docs/getting-started/flask/) - instruction on how to install Tailwind CSS Flask and Flowbite
 - [Tailwind Flask Starter](https://github.com/themesberg/tailwind-flask-starter)
 - [Chart.js](https://www.chartjs.org/docs/latest/getting-started/) -  it's a JavaScript library for creating interactive charts and graphs on the web.
