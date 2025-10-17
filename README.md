@@ -121,6 +121,11 @@ This table stores the income and expense records.
 | `description` | String    | A brief description of the record.                           |
 | `date`      | DateTime  | The date and time when the record was created.               |
 
+## BUGS/KNOWN ISSUES
+
+- **Database Connection Errors:** The application may encounter a `sqlalchemy.exc.OperationalError` due to the database connection being closed by the server after a period of inactivity. This can result in an `Internal Server Error` on the deployed page. The issue is resolved by refreshing the page, which establishes a new connection.
+
+  **Solution:** To prevent this, the `pool_pre_ping` setting has been enabled in the SQLAlchemy engine options. This configuration tests the database connection for freshness before each use and re-establishes it if it has been closed, thus preventing the error.
 
 ## Acknowledgements
 
