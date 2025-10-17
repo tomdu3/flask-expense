@@ -18,6 +18,7 @@ app.wsgi_app = WhiteNoise(app.wsgi_app, root=static_path)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DB_URI') or 'sqlite:///expensesDB.db'
 print("Using database URI:", app.config['SQLALCHEMY_DATABASE_URI'])
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY') or ''
+app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {'pool_pre_ping': True}
 
 db = SQLAlchemy(app)
 
