@@ -49,7 +49,9 @@
 </div>
 <script id="income_vs_expense-data" type="application/json">{{ income_vs_expense | tojson }}</script>
 <script id="income_category-data" type="application/json">{{ income_category | tojson }}</script>
+<script id="income_category_labels-data" type="application/json">{{ income_category_labels | tojson }}</script>
 <script id="expense_category-data" type="application/json">{{ expense_category | tojson }}</script>
+<script id="expense_category_labels-data" type="application/json">{{ expense_category_labels | tojson }}</script>
 <script id="over_time_expenditure-data" type="application/json">{{ over_time_expenditure | tojson }}</script>
 <script id="labels-data" type="application/json">{{ dates_label | tojson }}</script>
 <script src="{{ url_for('static', filename='script.js') }}"></script>
