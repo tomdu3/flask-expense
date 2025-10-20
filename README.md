@@ -123,6 +123,10 @@ This table stores the income and expense records.
 
 ## BUGS/KNOWN ISSUES
 
+- **Chart Data Mismatch:** The income and expense category charts on the dashboard were not correctly displaying the data. The labels for the charts were hardcoded in `app/static/script.js`, which caused a mismatch with the data coming from the database.
+
+  **Solution:** The issue was resolved by dynamically passing the category labels from the backend to the frontend. The `app/routes.py` file was modified to extract the category labels and pass them to the `dashboard.html` template. The template was updated to embed the labels as JSON data. Finally, `app/static/script.js` was updated to use these dynamic labels, ensuring the charts accurately reflect the database records.
+
 - **Database Connection Errors:** The application may encounter a `sqlalchemy.exc.OperationalError` due to the database connection being closed by the server after a period of inactivity. This can result in an `Internal Server Error` on the deployed page. The issue is resolved by refreshing the page, which establishes a new connection.
 
   **Solution:** To prevent this, the `pool_pre_ping` setting has been enabled in the SQLAlchemy engine options. This configuration tests the database connection for freshness before each use and re-establishes it if it has been closed, thus preventing the error.
