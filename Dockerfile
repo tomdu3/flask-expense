@@ -30,4 +30,4 @@ ENV FLASK_APP main:app
 EXPOSE 5000
 
 # Run the application
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "main:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5002", "main:app"]
