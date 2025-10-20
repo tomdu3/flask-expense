@@ -3,7 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Parse data passed from Jinja
     const income_vs_expense_raw = JSON.parse(document.getElementById('income_vs_expense-data').textContent);
     const income_category_data = JSON.parse(document.getElementById('income_category-data').textContent);
+    const income_category_labels = JSON.parse(document.getElementById('income_category_labels-data').textContent);
     const expense_category_data = JSON.parse(document.getElementById('expense_category-data').textContent);
+    const expense_category_labels = JSON.parse(document.getElementById('expense_category_labels-data').textContent);
     const over_time_expenditure = JSON.parse(document.getElementById('over_time_expenditure-data').textContent);
     const labels = JSON.parse(document.getElementById('labels-data').textContent);
 
@@ -63,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         new Chart(ctxCategory, {
             type: 'bar',
             data: {
-                labels: ['salary', 'bonus', 'freelance', 'interest', 'other'],
+                labels: income_category_labels,
                 datasets: [{
                     label: "Categories Of Income",
                     data: income_category_data,
@@ -99,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
         new Chart(ctxExpenseCategory, {
             type: 'bar',
             data: {
-                labels: ['rent', 'transport', 'food', 'medical', 'tax', 'other'],
+                labels: expense_category_labels,
                 datasets: [{
                     label: "Categories Of Expenses",
                     data: expense_category_data,
