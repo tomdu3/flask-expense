@@ -224,7 +224,9 @@ def dashboard():
 
     # Extract lists for the template
     income_category = [item["amount"] for item in income_category_data]
+    income_category_labels = [item["category"] for item in income_category_data]
     expense_category = [item["amount"] for item in expense_category_data]
+    expense_category_labels = [item["category"] for item in expense_category_data]
     income_expense = [item["amount"] for item in income_vs_expense_data]
     over_time_expenditure = [item["amount"] for item in dates_data]
     dates_label = [item["date"] for item in dates_data]
@@ -237,7 +239,9 @@ def dashboard():
         expense_categories=expense_category_data,
         dates=dates_data,
         income_category=income_category,
+        income_category_labels=income_category_labels,
         expense_category=expense_category,
+        expense_category_labels=expense_category_labels,
         income_expense=income_expense,
         over_time_expenditure=over_time_expenditure,
         dates_label=dates_label
